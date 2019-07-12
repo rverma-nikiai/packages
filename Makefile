@@ -10,7 +10,7 @@ export README_DEPS ?= docs/targets.md
 export DIST_CMD ?= cp -a
 export DIST_PATH ?= /dist
 export INSTALL_PATH ?= /usr/local/bin
-export ALPINE_VERSION ?= 3.8
+export ALPINE_VERSION ?= 3.10
 
 -include $(shell curl -sSL -o .build-harness "https://git.io/build-harness"; echo .build-harness)
 
@@ -62,6 +62,10 @@ docker/build/apk/shell:
 		--name apkbuild \
 		--rm \
 		-it \
+		-e AWS_SECRET_ACCESS_KEY \
+		-e AWS_ACCESS_KEY_ID \
+		-e AWS_SESSION_TOKEN \
+		-e AWS_SECURITY_TOKEN \
 		-e APK_PACKAGES_PATH=/packages/artifacts/$(ALPINE_VERSION) \
 		--privileged \
 		-w /packages \
